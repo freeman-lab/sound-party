@@ -1,0 +1,21 @@
+{
+  "name": "sphere-party",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "build": "browserify index.js -o site/bundle.js"
+  },
+  "author": "freeman-lab",
+  "license": "MIT",
+  "dependencies": {
+    "canvas-fit": "^1.5.0",
+    "canvas-orbit-camera": "^1.0.2",
+    "gl-context": "^0.1.1",
+    "gl-scene": "^1.0.1",
+    "icosphere": "^1.0.0",
+    "right-now": "^1.0.0",
+    "tinycolor2": "^1.3.0",
+    "web-audio-analyser": "^2.0.1"
+  }
+}
