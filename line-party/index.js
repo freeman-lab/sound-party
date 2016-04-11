@@ -71,7 +71,7 @@ function bin (array, count) {
 
 regl.frame(function (count) {
   regl.clear({
-    color: [0.05, 0.05, 0.05, 1]
+    color: [0, 0, 0, 1]
   })
 
   if (analyser) {
