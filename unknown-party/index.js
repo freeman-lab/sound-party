@@ -27,7 +27,6 @@ var draw = regl({
   vert: [
     'precision mediump float;',
     'attribute vec2 position;',
-    'uniform mat4 proj;',
     'uniform float offset;',
     'void main() {',
     '  gl_Position = vec4(position.x, position.y - offset, 0.0, 1.0);',
@@ -36,11 +35,10 @@ var draw = regl({
   ].join('\n'),
 
   attributes: {
-    position: regl.prop('waveform')
+    position: regl.prop('position')
   },
 
   uniforms: {
-    proj: mat4.perspective([], Math.PI/2, window.innerWidth / window.innerHeight, 0.01, 1000),
     offset: regl.prop('offset')
   },
 
@@ -52,9 +50,10 @@ var draw = regl({
 })
 
 var out = []
+var updates = []
 var xy = []
 var tmp = []
-var i, j, raw, blurred, background, freq, total
+var i, j, raw, blurred, background, freq
 
 var color = []
 var oldchoice = 0
@@ -70,7 +69,6 @@ regl.frame(function (count) {
   
   if (analyser) {
     freq = analyser.frequencies().slice(5, 605)
-    total = freq.reduce(function (x, y) {return x + y}) / 90000
 
     if ((count % interval) == 0) {
       oldchoice = choice
@@ -87,11 +85,15 @@ regl.frame(function (count) {
 
     for (j = 0; j < 20; j++) {
       raw = Array(15).fill(0).concat(Array.prototype.slice.call(freq.slice(j * 30, (j + 1) * 30))).concat(Array(15).fill(0))
-      blurred = blur(ndarray(raw), 1).data
+      blur(ndarray(raw), 1)
       for (i = 0; i < 60; i++) {
-        out[i] = [((i - (60 / 2)) / (60 / 2) + 1 / 60) * 0.9, Math.random() / 100 + blurred[i] / 300]
+        out[i] = [((i - (60 / 2)) / (60 / 2) + 1 / 60) * 0.9, Math.random() / 100 + raw[i] / 300]
       }
-      draw({waveform: regl.buffer(out), offset: -j / (10 + 1.1) + 0.9})
+      updates[j] = {position: regl.buffer(out), offset: -j / (10 + 1.1) + 0.9}
+    }
+
+    for (j = 0; j < 20; j++) {
+      draw(updates[j])
     }
   }
 })
