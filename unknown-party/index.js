@@ -1,9 +1,7 @@
 var regl = require('regl')()
 var mat4 = require('gl-mat4')
-var _ = require('lodash')
 var hsv2rgb = require('hsv2rgb')
 var ndarray = require('ndarray')
-var kernel = require('kernel-smooth')
 var Analyser = require('web-audio-analyser')
 var blur = require('ndarray-gaussian-filter')
 
@@ -80,8 +78,7 @@ regl.frame(function (count) {
       while (flag == 0) {
         choice = Math.round(Math.random() * 3)
         if (!(choice == oldchoice)) flag = 1
-      }      
-      console.log(choice)
+      }
     }
 
     regl.clear({
