@@ -1,0 +1,22 @@
+{
+  "name": "unknown-party",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "build": "browserify index.js -o site/bundle.js",
+    "deploy": "surge site unknown-party.surge.sh"
+  },
+  "author": "freeman-lab",
+  "license": "MIT",
+  "dependencies": {
+    "hsv2rgb": "^1.1.0",
+    "kernel-smooth": "^0.2.1",
+    "lodash": "^4.11.2",
+    "ndarray": "^1.0.18",
+    "ndarray-gaussian-filter": "^1.0.0",
+    "regl": "^0.3.0",
+    "right-now": "^1.0.0",
+    "web-audio-analyser": "^2.0.1"
+  }
+}
