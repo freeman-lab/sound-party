@@ -65,6 +65,11 @@ color[1] = hsv2rgb(192, 0.8, 0.7)
 color[2] = hsv2rgb(100, 0.8, 0.7)
 color[3] = hsv2rgb(335, 0.8, 0.7)
 
+var buffers = []
+for (j = 0; j < 20; j++) {
+  buffers[j] = regl.buffer(60)
+}
+
 regl.frame(function (count) {
   
   if (analyser) {
@@ -89,7 +94,7 @@ regl.frame(function (count) {
       for (i = 0; i < 60; i++) {
         out[i] = [((i - (60 / 2)) / (60 / 2) + 1 / 60) * 0.9, Math.random() / 100 + raw[i] / 300]
       }
-      updates[j] = {position: regl.buffer(out), offset: -j / (10 + 1.1) + 0.9}
+      updates[j] = {position: buffers[j](out), offset: -j / (10 + 1.1) + 0.9}
     }
 
     for (j = 0; j < 20; j++) {
